@@ -1,48 +1,23 @@
 package com.boss.demo.mytask;
 
-import com.boss.demo.mytask.dao.ApplyFormDAO;
-import com.boss.demo.mytask.dao.FormItemDAO;
-import com.boss.demo.mytask.entity.ApplyForm;
-import com.boss.demo.mytask.entity.FormItem;
+import com.boss.demo.mytask.utils.SnowFlake;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 /**
  * @Author asus
  * @create 10/7/2020 上午9:48
  */
 @SpringBootTest
+@Slf4j
 public class TestDAO {
-    @Autowired
-    private FormItemDAO formItemDAO;
-    @Autowired
-    private ApplyFormDAO applyFormDAO;
-    @Test
-    public void Test(){
-        FormItem formItem = new FormItem();
-        formItem.setFormId(1);
-        formItem.setItemId(10);
-        formItem.setName("解决");
-        //formItemDAO.insert(formItem);
-    }
     @Test
     public void TestApplyForm(){
+        for (int i=0;i<100;i++){
+            log.info("第 "+i+" UUID：  "+SnowFlake.nextId());
+        }
 
-        ApplyForm applyForm = new ApplyForm();
-        applyForm.setApplyDepartment("sajosaoisain");
-        applyForm.setFormId(5);
-        applyForm.setApplyDepartment("sss");
-        applyForm.setPurchasingOpinion("wu");
-        applyForm.setEnterpotOpinion("wu");
-        applyForm.setDepartmentOpinion("wu");
-        applyForm.setBarmasterOpinion("wu");
-        applyForm.setGeneralManagerOpinion("wu");
-        applyForm.setApplicant("wu");
-        applyForm.setApplyDate("2020");
-        System.out.println(applyForm.toString());
-        //applyFormDAO.insert(applyForm);
     }
+
 }

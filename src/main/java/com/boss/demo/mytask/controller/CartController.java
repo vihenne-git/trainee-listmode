@@ -1,7 +1,8 @@
 package com.boss.demo.mytask.controller;
 
-import com.boss.demo.mytask.entity.ApplyForm;
-import com.boss.demo.mytask.entity.FormItem;
+import com.boss.demo.mytask.utils.ReturnResult;
+import com.boss.demo.mytask.entity.po.ApplyForm;
+import com.boss.demo.mytask.entity.po.FormItem;
 import com.boss.demo.mytask.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @Author asus
+ * @Author yuhangchen
  * @create 9/7/2020 下午4:49
  */
 @RestController
@@ -19,26 +20,35 @@ public class CartController {
     private CartService cartService;
 
     @RequestMapping("/add")
-    public String add(@RequestBody FormItem formItem){
+    public ReturnResult add(@RequestBody FormItem formItem) {
         cartService.add(formItem);
-        return "add item :"+formItem.getName();
+        return ReturnResult.success(200,"加入货品成功","add item :" + formItem.getName());
     }
+
     @RequestMapping("/remove")
-    public String remove(@RequestBody FormItem formItem){
+    public ReturnResult remove(@RequestBody FormItem formItem) {
         cartService.remove(formItem.getItemId());
-        return null;
+        return ReturnResult.success(200,"删除货品成功","remove item :" + formItem.getName());
     }
+
     @RequestMapping("/edit")
-    public String edit(@RequestBody FormItem formItem){
+    public ReturnResult edit(@RequestBody FormItem formItem) {
         cartService.edit(formItem);
-        return null;
+        return ReturnResult.success(200,"修改货品成功","edit item :" + formItem.getName());
     }
+
     @RequestMapping("/list")
-    public String list(@RequestBody FormItem formItem){
-        return cartService.list();
+    public ReturnResult list(@RequestBody FormItem formItem) {
+        String data = cartService.list();
+        if(data !=null){
+            return ReturnResult.success(200,"查询购物车成功",data);
+        }else {
+            return ReturnResult.fail(404,"购物车为空","list :" + null);
+        }
     }
+
     @RequestMapping("/settle")
-    public String settle(@RequestBody ApplyForm applyForm){
-        return cartService.settle(applyForm);
+    public ReturnResult settle(@RequestBody ApplyForm applyForm) {
+        return ReturnResult.success(200,"申请成功",cartService.settle(applyForm));
     }
 }

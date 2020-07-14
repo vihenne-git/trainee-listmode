@@ -1,7 +1,7 @@
 package com.boss.demo.mytask.dao;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.boss.demo.mytask.entity.ApplyForm;
+import com.boss.demo.mytask.entity.po.ApplyForm;
 
 /**
  * @Author yuhangchen

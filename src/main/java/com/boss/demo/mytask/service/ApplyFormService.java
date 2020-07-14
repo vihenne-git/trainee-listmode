@@ -1,50 +1,33 @@
 package com.boss.demo.mytask.service;
 
-import com.boss.demo.mytask.dao.ApplyFormDAO;
-import com.boss.demo.mytask.dao.FormItemDAO;
-import com.boss.demo.mytask.entity.ApplyForm;
-import com.boss.demo.mytask.entity.FormItem;
-import com.sun.org.apache.xpath.internal.operations.Or;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import com.boss.demo.mytask.entity.po.ApplyForm;
 
 /**
- * @Author asus
+ * @Author yuhangchen
  * @create 9/7/2020 下午4:51
  */
-@Service
-public class ApplyFormService {
-    @Autowired
-    private CartService cartService;
+public interface ApplyFormService {
 
-    @Autowired
-    private ApplyFormDAO applyFormDAO;
+   /**
+    *
+    *
+    * @description: 用于根据购物车存储的数据与其他数据生成订单数据，并存储在数据中。
+    * @param {ApplyForm} applyForm
+    * @return: {void}
+    * @author: YuHangChen
+    * @time: 14/7/2020 上午10:17
+    */
+    public void settle(ApplyForm applyForm);
 
-    @Autowired
-    private FormItemDAO formItemDAO;
-    public void settle(ApplyForm applyForm){
-        FormItem formItem ;
-        applyFormDAO.insert(applyForm);
-        HashMap<Integer, FormItem> cart = cartService.getMyCart();
-        Iterator cartIt = cart.keySet().iterator();
-        while (cartIt.hasNext()) {
-            Object key = cartIt.next();
-            FormItem value = cart.get(key);
-            value.setFormId(applyForm.getFormId());
-            formItemDAO.insert(value);
-        }
-    }
-    public String listById (int form_id){
-        return applyFormDAO.selectById(form_id).toString();
-    }
-
+    /**
+     *
+     *
+     * @description: 用于根据购物车存储的数据与其他数据生成订单数据，并存储在数据中。
+     * @param {int} formId
+     * @return: {ApplyForm}
+     * @author: YuHangChen
+     * @time: 14/7/2020 上午10:17
+     */
+    public ApplyForm listById (int formId);
 
 }

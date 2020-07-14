@@ -1,64 +1,78 @@
 package com.boss.demo.mytask.service;
 
-import com.alibaba.fastjson.JSONObject;
-import com.boss.demo.mytask.entity.ApplyForm;
-import com.boss.demo.mytask.entity.FormItem;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.JsonObjectDeserializer;
-import org.springframework.stereotype.Service;
+import com.boss.demo.mytask.entity.po.ApplyForm;
+import com.boss.demo.mytask.entity.po.FormItem;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
 /**
- * @Author asus
+ * @Author yuhangchen
  * @create 9/7/2020 下午4:52
  */
-@Service
-public class CartService {
-    @Autowired
-    private HttpSession session;
+public interface CartService {
 
-    @Autowired
-    private ApplyFormService applyFormService;
+    /**
+     *
+     *
+     * @description: 用于向购物车添加货品。
+     * @param {FormItem} formItem
+     * @return: {boolean}
+     * @author: YuHangChen
+     * @time: 14/7/2020 上午10:17
+     */
+    public boolean add(FormItem formItem);
 
-    private HashMap<Integer, FormItem> myCart;
+    /**
+     *
+     *
+     * @description: 用于去除购物车的货品。
+     * @param {int} itemId
+     * @return: {boolean}
+     * @author: YuHangChen
+     * @time: 14/7/2020 上午10:17
+     */
+    public boolean remove(int itemId);
 
-    public boolean add(FormItem formItem){
-        //System.out.println("add");
-        getMyCart();
-        myCart.put(formItem.getItemId(), formItem);
-        return true;
-    }
-    public boolean remove(int ItemId){
-        //System.out.println("remove");
-        getMyCart();
-        myCart.remove(ItemId);
-        return true;
-    }
-    public boolean edit(FormItem formItem){
-        //System.out.println("edit");
-        getMyCart();
-        myCart.remove(formItem.getItemId());
-        myCart.put(formItem.getItemId(), formItem);
-        return true;
-    }
-    public String list(){
-        //System.out.println("list");
-        getMyCart();
-        return JSONObject.toJSONString(myCart.entrySet().toArray());
-    }
-    public String settle(ApplyForm applyForm){
-        getMyCart();
-        applyFormService.settle(applyForm);
-        return "settle succeed";
-    }
-    public HashMap<Integer, FormItem> getMyCart(){
-        myCart = (HashMap) session.getAttribute("myCart");
-        if(myCart == null){
-            myCart = new HashMap<Integer, FormItem>();
-            session.setAttribute("myCart", myCart);
-        }
-        return myCart;
-    }
+    /**
+     *
+     *
+     * @description: 用于修改购物车的货品。
+     * @param {FormItem} formItem
+     * @return: {boolean}
+     * @author: YuHangChen
+     * @time: 14/7/2020 上午10:17
+     */
+    public boolean edit(FormItem formItem);
+
+    /**
+     *
+     *
+     * @description: 用于查看购物车所有货品数据。
+     * @return: {String}
+     * @author: YuHangChen
+     * @time: 14/7/2020 上午10:17
+     */
+    public String list();
+
+    /**
+     *
+     *
+     * @description: 用于生成订单。
+     * @param {ApplyForm} applyForm
+     * @return: {String}
+     * @author: YuHangChen
+     * @time: 14/7/2020 上午10:17
+     */
+    public String settle(ApplyForm applyForm);
+
+    /**
+     *
+     *
+     * @description: 用于获取购物车对象
+     * @return: {HashMap<Integer, FormItem>}
+     * @author: YuHangChen
+     * @time: 14/7/2020 上午10:17
+     */
+    public HashMap<Integer, FormItem> getMyCart();
+
 }
