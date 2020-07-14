@@ -40,25 +40,9 @@ public class ApplyFormController {
 
     }
 
-
-    /*@RequestMapping("/test")
-    public String test_cookie(HttpServletResponse response){
-        response.addCookie(new Cookie("testUser", "vihenne"));
-        return "cookies";
+    @GetMapping("/Test")
+    public String test (@RequestParam String id){
+        return id;
     }
-    @RequestMapping("/testSession")
-    @ResponseBody
-    public String testSession(HttpSession session){
-        session.setAttribute("testSession","this is my session");
-        return "testSession";
-    }
-
-
-    @RequestMapping("/testGetSession")
-    @ResponseBody
-    public String testGetSession(HttpSession session){
-        Object testSession = session.getAttribute("testSession");
-        return String.valueOf(testSession);
-    }*/
 
 }
